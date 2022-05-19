@@ -32,25 +32,25 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.Charts" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Charts.Core" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.CodeParser" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Data" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Data.Desktop" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Mvvm" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Office.Core" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.PivotGrid.Core" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Printing.Core" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Reporting.Core" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.RichEdit.Core" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.RichEdit.Export" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Sparkline.Core" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Wpf.Core" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Wpf.DocumentViewer.Core" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Wpf.PivotGrid" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Wpf.Printing" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Wpf.Reporting" Version="21.1.*-*" />
-    <PackageReference Include="DevExpress.Wpf.Themes.All" Version="21.1.*-*" />
+    <PackageReference Include="DevExpress.Charts" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Charts.Core" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.CodeParser" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Data" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Data.Desktop" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Mvvm" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Office.Core" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.PivotGrid.Core" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Printing.Core" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Reporting.Core" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.RichEdit.Core" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.RichEdit.Export" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Sparkline.Core" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Wpf.Core" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Wpf.DocumentViewer.Core" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Wpf.PivotGrid" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Wpf.Printing" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Wpf.Reporting" Version="22.1.*-*" />
+    <PackageReference Include="DevExpress.Wpf.Themes.All" Version="22.1.*-*" />
     <PackageReference Include="System.Data.OleDB" Version="5.0" />
   </ItemGroup>
 </Project>

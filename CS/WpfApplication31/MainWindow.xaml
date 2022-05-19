@@ -4,7 +4,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <dxpg:PivotGridControl x:Name="pivotGridControl1" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Height="Auto" Margin="0,0,176,0" HorizontalAlignment="Right" />
+        <dxpg:PivotGridControl x:Name="pivotGridControl1" DataProcessingEngine="Optimized" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Height="Auto" Margin="0,0,176,0" HorizontalAlignment="Right" />
         <dxe:ListBoxEdit x:Name="listBoxEdit1" VerticalAlignment="Stretch" Margin="0,10,0,104" HorizontalAlignment="Right" Width="171"/>
         <Button x:Name="button1" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Click="OnButtonClick" Height="28" Width="161" Content="Create report"/>
         <dxe:SpinEdit x:Name="spinEdit1" HorizontalAlignment="Right" Margin="0,0,9,43" VerticalAlignment="Bottom" Width="162" EditValue="100"/>

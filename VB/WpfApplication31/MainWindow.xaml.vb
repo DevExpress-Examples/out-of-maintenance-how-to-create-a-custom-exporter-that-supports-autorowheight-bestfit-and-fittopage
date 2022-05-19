@@ -41,7 +41,7 @@ Namespace WpfApplication31
 
             Dim fieldYear As PivotGridField = pivotGridControl1.Fields("OrderDate")
             fieldYear.Area = FieldArea.ColumnArea
-            fieldYear.GroupInterval = FieldGroupInterval.DateYear
+            DirectCast(fieldYear.DataBinding, DataSourceColumnBinding).GroupInterval = FieldGroupInterval.DateYear
             fieldYear.Caption = "Year"
             pivotGridControl1.EndUpdate()
         End Sub

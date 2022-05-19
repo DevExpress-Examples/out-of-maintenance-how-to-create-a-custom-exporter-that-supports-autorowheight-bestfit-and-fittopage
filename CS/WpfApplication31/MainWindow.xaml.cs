@@ -39,7 +39,7 @@ namespace WpfApplication31 {
 
             PivotGridField fieldYear = pivotGridControl1.Fields["OrderDate"];
             fieldYear.Area = FieldArea.ColumnArea;
-            fieldYear.GroupInterval = FieldGroupInterval.DateYear;
+            (fieldYear.DataBinding as DataSourceColumnBinding).GroupInterval = FieldGroupInterval.DateYear;
             fieldYear.Caption = "Year";
             pivotGridControl1.EndUpdate();
         }
