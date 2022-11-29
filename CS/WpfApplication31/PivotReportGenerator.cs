@@ -8,6 +8,8 @@ using DevExpress.Xpf.PivotGrid;
 using System.Windows.Media;
 using System.Globalization;
 using System.Windows;
+using DevExpress.Drawing;
+using DevExpress.XtraPrinting;
 
 namespace WpfApplication31 {
     public enum ReportGeneratorType {
@@ -24,7 +26,7 @@ namespace WpfApplication31 {
             rep.DataMember = ((DataSet)rep.DataSource).Tables[0].TableName;
             InitBands(rep);
             InitStyles(rep);
-            InitDetailsBasedonXRTable(rep, kind, Convert.ToInt32(columnWidth), repeatRowHeader);
+            InitDetailsBasedonXRTable(rep, kind, Convert.ToSingle(columnWidth), repeatRowHeader);
             return rep;
         }
         public static DataSet FillDataset(PivotGridControl pivot) {
@@ -124,24 +126,24 @@ namespace WpfApplication31 {
             // Add styles to report's style sheet
             rep.StyleSheet.AddRange(new XRControlStyle[] { oddStyle, evenStyle });
         }
-        public static void InitDetailsBasedonXRTable(XtraReport rep, ReportGeneratorType kind, int columnWidth, bool repeatRowHeader) {
+        public static void InitDetailsBasedonXRTable(XtraReport rep, ReportGeneratorType kind, float columnWidth, bool repeatRowHeader) {
             if(!repeatRowHeader || kind == ReportGeneratorType.SinglePage)
                 InitDetailsBasedonXRTableWithoutRepeatingRowHeader(rep, kind, columnWidth);
             else
                 InitDetailsBasedonXRTableRepeatingRowHeader(rep, kind, columnWidth);
         }
 
-        static void InitDetailsBasedonXRTableRepeatingRowHeader(XtraReport rep, ReportGeneratorType kind, int columnWidth) {
-            Font font = new Font("Tahoma", 9.75f);
+        static void InitDetailsBasedonXRTableRepeatingRowHeader(XtraReport rep, ReportGeneratorType kind, float columnWidth) {
+            DXFont font = new DXFont("Tahoma", 9.75f);
             DataTable dataTable = ((DataSet)rep.DataSource).Tables[0];
             int processedPage = 0;
-            int usablePageWidth = rep.PageWidth - (rep.Margins.Left + rep.Margins.Right);
+            float usablePageWidth = rep.PageWidth - (rep.Margins.Left + rep.Margins.Right);
 
-            List<int> columnsWidth = null;
+            List<float> columnsWidth = null;
             if(kind == ReportGeneratorType.FixedColumnWidth)
                 columnsWidth = DefineColumnsWidth(columnWidth, dataTable.Columns.Count);
             else
-                columnsWidth = GetColumnsBestFitWidth(dataTable, font);
+                columnsWidth = GetColumnsBestFitWidth(dataTable, font, rep.ReportUnit);
 
             XRTable tableHeader = null;
             XRTable tableDetail = null;
@@ -150,7 +152,7 @@ namespace WpfApplication31 {
             tableDetail.BeginInit();
             int i = 1;
             AddCellsToTables(tableHeader, tableDetail, dataTable.Columns[0], columnsWidth[0], true);
-            int remainingSpace = usablePageWidth - columnsWidth[0];
+            float remainingSpace = usablePageWidth - columnsWidth[0];
             do {
                 if(columnsWidth[i] > remainingSpace) {
                     processedPage++;
@@ -176,13 +178,13 @@ namespace WpfApplication31 {
             tableHeader.EndInit();
             tableDetail.EndInit();
         }
-        public static void AddCellsToTables(XRTable header, XRTable detail, DataColumn dc, int columnWidth, bool isFirstColumnInTable) {
+        public static void AddCellsToTables(XRTable header, XRTable detail, DataColumn dc, float columnWidth, bool isFirstColumnInTable) {
             XRTableCell headerCell = new XRTableCell();
             headerCell.Text = dc.Caption;
             XRTableCell detailCell = new XRTableCell();
             detailCell.DataBindings.Add("Text", null, dc.Caption);
-            headerCell.Width = columnWidth;
-            detailCell.Width = columnWidth;
+            headerCell.WidthF = columnWidth;
+            detailCell.WidthF = columnWidth;
             if(isFirstColumnInTable) {
                 headerCell.Borders = DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top | DevExpress.XtraPrinting.BorderSide.Bottom;
                 detailCell.Borders = DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top | DevExpress.XtraPrinting.BorderSide.Bottom;
@@ -195,7 +197,7 @@ namespace WpfApplication31 {
             header.Rows[0].Cells.Add(headerCell);
             detail.Rows[0].Cells.Add(detailCell);
         }
-        public static void InitNewTableInstancesAt(XtraReport report, Font font, out XRTable header, out XRTable detail, PointF location) {
+        public static void InitNewTableInstancesAt(XtraReport report, DXFont font, out XRTable header, out XRTable detail, PointF location) {
             header = InitXRTable(font, false);
             detail = InitXRTable(font, true);
             header.LocationF = location;
@@ -207,7 +209,7 @@ namespace WpfApplication31 {
             report.Bands[BandKind.PageHeader].Controls.Add(header);
             report.Bands[BandKind.Detail].Controls.Add(detail);
         }
-        static XRTable InitXRTable(Font font, bool withStyles) {
+        static XRTable InitXRTable(DXFont font, bool withStyles) {
             XRTable table = new XRTable();
             table.Font = font;
             table.Height = 20;
@@ -218,17 +220,17 @@ namespace WpfApplication31 {
             return table;
         }
 
-        static List<int> DefineColumnsWidth(int columnWidth, int count) {
-            List<int> columnsWidth = new List<int>();
+        static List<float> DefineColumnsWidth(float columnWidth, int count) {
+            List<float> columnsWidth = new List<float>();
             for(int i = 0; i < count; i++)
                 columnsWidth.Add(columnWidth);
             return columnsWidth;
         }
-        static void InitDetailsBasedonXRTableWithoutRepeatingRowHeader(XtraReport rep, ReportGeneratorType kind, int columnWidth) {
-            Font font = new Font("Tahoma", 9.75f);
+        static void InitDetailsBasedonXRTableWithoutRepeatingRowHeader(XtraReport rep, ReportGeneratorType kind, float columnWidth) {
+            DXFont font = new DXFont("Tahoma", 9.75f);
             DataSet ds = ((DataSet)rep.DataSource);
             int colCount = ds.Tables[0].Columns.Count;
-            int colWidth = 0;
+            float colWidth = 0;
 
 
 
@@ -237,23 +239,23 @@ namespace WpfApplication31 {
             InitNewTableInstancesAt(rep, font, out tableHeader, out tableDetail, new PointF(0, 0));
 
 
-            List<int> columnsWidth = null;
+            List<float> columnsWidth = null;
             switch(kind) {
                 case ReportGeneratorType.FixedColumnWidth:
                     colWidth = columnWidth;
-                    tableHeader.Width = columnWidth * colCount;
-                    tableDetail.Width = columnWidth * colCount;
+                    tableHeader.WidthF = columnWidth * colCount;
+                    tableDetail.WidthF = columnWidth * colCount;
                     break;
                 case ReportGeneratorType.BestFitColumns:
-                    columnsWidth = GetColumnsBestFitWidth(ds.Tables[0], font);
+                    columnsWidth = GetColumnsBestFitWidth(ds.Tables[0], font, rep.ReportUnit);
                     colWidth = 0;
-                    tableHeader.Width = GetTotalWidth(columnsWidth);
-                    tableDetail.Width = tableHeader.Width;
+                    tableHeader.WidthF = GetTotalWidth(columnsWidth);
+                    tableDetail.WidthF = tableHeader.Width;
                     break;
                 default:
                     colWidth = (rep.PageWidth - (rep.Margins.Left + rep.Margins.Right)) / colCount;
-                    tableHeader.Width = (rep.PageWidth - (rep.Margins.Left + rep.Margins.Right));
-                    tableDetail.Width = (rep.PageWidth - (rep.Margins.Left + rep.Margins.Right));
+                    tableHeader.WidthF = (rep.PageWidth - (rep.Margins.Left + rep.Margins.Right));
+                    tableDetail.WidthF = (rep.PageWidth - (rep.Margins.Left + rep.Margins.Right));
                     break;
             }
 
@@ -269,41 +271,32 @@ namespace WpfApplication31 {
 
         }
 
-        static int GetTotalWidth(List<int> columnsWidth) {
-            int i = 0;
-            foreach(int colWidth in columnsWidth)
+        static float GetTotalWidth(List<float> columnsWidth) {
+            float i = 0;
+            foreach(float colWidth in columnsWidth)
                 i += colWidth;
             return i;
         }
 
-        static List<int> GetColumnsBestFitWidth(DataTable dataTable, Font font) {
-            List<int> optimalColumnWidth = new List<int>();
+        static List<float> GetColumnsBestFitWidth(DataTable dataTable, DXFont font, ReportUnit unit) {
+            List<float> optimalColumnWidth = new List<float>();
             float maxWidth = 0;
             float tempWidth = 0;
             for(int i = 1; i < dataTable.Rows.Count; i++) {
-                tempWidth = MeasureWidth(dataTable.Rows[i][0].ToString(), font);
+                tempWidth = MeasureWidth(dataTable.Rows[i][0].ToString(), font, unit);
                 maxWidth = maxWidth > tempWidth ? maxWidth : tempWidth;
             }
-            optimalColumnWidth.Add(Convert.ToInt32(XRConvert.Convert(maxWidth, GraphicsUnit.Pixel, GraphicsUnit.Inch) * 100 + 1));
+            optimalColumnWidth.Add(maxWidth);
             for(int i = 1; i < dataTable.Columns.Count; i++) {
-                tempWidth = MeasureWidth(dataTable.Columns[i].ColumnName.ToString(), font);
+                tempWidth = MeasureWidth(dataTable.Columns[i].ColumnName.ToString(), font, unit);
                 maxWidth = 50 > tempWidth ? 50 : tempWidth;
-                optimalColumnWidth.Add(Convert.ToInt32(XRConvert.Convert(maxWidth, GraphicsUnit.Pixel, GraphicsUnit.Inch) * 100 + 1));
+                optimalColumnWidth.Add(maxWidth);
             }
             return optimalColumnWidth;
         }
 
-        static float MeasureWidth(string candidate, Font font) {
-            FormattedText formattedText = new FormattedText(
-                candidate,
-                CultureInfo.CurrentUICulture,
-                FlowDirection.LeftToRight,
-                new Typeface(font.Name),
-                font.Size,
-                System.Windows.Media.Brushes.Black);
-            float width = 0;
-            float.TryParse(formattedText.Width.ToString(), out width);
-            return width;
+        static float MeasureWidth(string candidate, DXFont font, ReportUnit unit) {
+            return BestSizeEstimator.GetBoundsToFitText(candidate, new BrickStyle() { Font = font }, unit).Width;
         }
     }
 }
