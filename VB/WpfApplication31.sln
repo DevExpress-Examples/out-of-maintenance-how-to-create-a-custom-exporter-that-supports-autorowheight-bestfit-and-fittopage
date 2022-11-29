@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2012
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WpfApplication31", "WpfApplication31\WpfApplication31.vbproj", "{41174393-1902-4D1A-8928-41EA7F290E85}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41174393-1902-4D1A-8928-41EA7F290E85}.Debug|x86.ActiveCfg = Debug|x86
+		{41174393-1902-4D1A-8928-41EA7F290E85}.Debug|x86.Build.0 = Debug|x86
+		{41174393-1902-4D1A-8928-41EA7F290E85}.Release|x86.ActiveCfg = Release|x86
+		{41174393-1902-4D1A-8928-41EA7F290E85}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
